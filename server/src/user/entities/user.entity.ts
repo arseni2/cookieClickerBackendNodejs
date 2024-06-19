@@ -1,4 +1,6 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import { CommunityEntity } from '../../community/entities/community.entity';
+import {PerkEntity} from "../../perk/entities/perk.entity";
 
 @Entity()
 export class UserEntity {
@@ -17,6 +19,9 @@ export class UserEntity {
     @Column({default: 0})
     multitap: number;
 
-    @Column({default: false})
-    isAutoClicker: boolean;
+    @ManyToOne(() => CommunityEntity, (community) => community.members)
+    community: CommunityEntity
+
+    @OneToMany(() => PerkEntity, (perk) => perk.user)
+    perks: PerkEntity[]
 }

@@ -1,9 +1,10 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModule } from './user/user.module';
-import { CommunityModule } from './community/community.module';
+import {Module} from '@nestjs/common';
+import {AppController} from './app.controller';
+import {AppService} from './app.service';
+import {TypeOrmModule} from '@nestjs/typeorm';
+import {UserModule} from './user/user.module';
+import {CommunityModule} from './community/community.module';
+import {PerkModule} from './perk/perk.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { CommunityModule } from './community/community.module';
     }),
     UserModule,
     CommunityModule,
+    PerkModule,
   ],
   controllers: [AppController],
   providers: [AppService],
