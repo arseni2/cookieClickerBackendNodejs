@@ -10,24 +10,32 @@ export class UserService {
     constructor(
         @InjectRepository(UserEntity)
         private userRepo: Repository<UserEntity>,
-    ) {}
-    create(createUserDto: CreateUserDto) {
-       return this.userRepo.save(createUserDto)
+    ) {
     }
 
-    findAll() {
-        return this.userRepo.find()
+    async create(createUserDto: CreateUserDto) {
+        const newUser = await this.userRepo.save(createUserDto);
+
+        if (createUserDto.refId) {
+            const user = await this.userRepo.findOne({
+                where: {
+                    id: createUserDto.refId
+                }
+            });
+            user.referrals.push(newUser)
+        }
+        return newUser
     }
 
-    findOne(id: number) {
-        return `This action returns a #${id} user`;
+    findOneById(id: number) {
+        return this.userRepo.findOne({where: {id: id}});
     }
 
     update(id: number, updateUserDto: UpdateUserDto) {
-        return `This action updates a #${id} user`;
+        return this.userRepo.update(id, updateUserDto)
     }
 
     remove(id: number) {
-        return `This action removes a #${id} user`;
+        return this.userRepo.delete(id)
     }
 }
