@@ -24,4 +24,7 @@ export class UserEntity {
 
     @OneToMany(() => PerkEntity, (perk) => perk.user)
     perks: PerkEntity[]
+
+    @OneToMany(() => UserEntity, (user) => user.id)
+    referrals: UserEntity[]
 }
